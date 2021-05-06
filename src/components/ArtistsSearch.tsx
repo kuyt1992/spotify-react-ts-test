@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import React, { memo } from "react";
 import { useState, VFC } from "react";
 import styled from "styled-components";
@@ -52,7 +53,11 @@ export const ArtistsSearch: VFC<Props> = memo((props) => {
                 src={artist.img[1]?.url || ""}
                 alt={artist.name}
               />
-              <dd>{artist.name}</dd>
+              <dd>
+                <Link to={{ pathname: "/albums", state: artist.id }}>
+                  {artist.name}
+                </Link>
+              </dd>
 
               <dt>ポピュラリティ</dt>
               <dd>{artist.popularity}</dd>
