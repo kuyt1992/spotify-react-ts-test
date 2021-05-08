@@ -32,6 +32,7 @@ export type ArtistsAlbumsResponse = {
       name: string;
       release_date: string;
       release_date_precision: string;
+      total_tracks: number;
       type: string;
       uri: string;
     }
