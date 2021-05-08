@@ -4,6 +4,7 @@ import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import { useSetAccessToken } from "./hooks/useSetAccessToken";
 import { ArtistsSearch } from "./components/ArtistsSearch";
 import { ArtistsAlbums } from "./components/ArtistsAlbums";
+import { AlbumTracks } from "./components/AlbumTracks";
 
 export default function App() {
   const { accessToken } = useSetAccessToken();
@@ -20,9 +21,19 @@ export default function App() {
           <Route exact path="/">
             <ArtistsSearch accessToken={accessToken} />
           </Route>
-          <Route path="/albums">
-            <ArtistsAlbums accessToken={accessToken} />
-          </Route>
+          <Route
+            path="/albums"
+            render={({ match: { url } }) => (
+              <Switch>
+                <Route exact path={url}>
+                  <ArtistsAlbums accessToken={accessToken} />
+                </Route>
+                <Route exact path={`${url}/albumTracks`}>
+                  <AlbumTracks accessToken={accessToken} />
+                </Route>
+              </Switch>
+            )}
+          />
         </Switch>
       </Route>
     </BrowserRouter>

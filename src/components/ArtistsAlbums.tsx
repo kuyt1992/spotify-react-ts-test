@@ -1,5 +1,5 @@
 import { memo, useEffect, useState, VFC } from "react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { useSetArtistsAlbums } from "../hooks/useSetArtistsAlbums";
@@ -40,7 +40,9 @@ export const ArtistsAlbums: VFC<Props> = memo((props) => {
               />
               <br />
               <dt>アルバム名: </dt>
-              <dd>{album.name}</dd>
+              <Link to={{ pathname: "/albums/albumTracks", state: album.id }}>
+                <dd>{album.name}</dd>
+              </Link>
               <dt>リリース日: </dt>
               <dd>{album.release_date}</dd>
               <dt>種別: </dt>
