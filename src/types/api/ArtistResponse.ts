@@ -22,10 +22,10 @@ export type ArtistResponse = {
         uri: string;
       }
     ];
-    limit: number;
-    next?: null;
-    offset: number;
-    previous?: null;
-    total: number;
+    limit?: number;
+    next?: string;
+    offset?: number;
+    previous?: string;
+    total?: number;
   };
 };
