@@ -1,10 +1,8 @@
-import axios from "axios";
-import { memo, useEffect, useState, VFC } from "react";
+import { memo, useEffect, VFC } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
-import { TrackResponse } from "../types/api/TrackResponse";
-import { Track } from "../types/Track";
+import { useSetAlbumTracks } from "../hooks/useSetAlbumTracks";
 
 type Props = {
   accessToken: string;
@@ -14,65 +12,36 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
   const { state } = useLocation<Location>();
   const { accessToken } = props;
 
-  const [trackDatas, setTrackDatas] = useState<Array<Track>>([]);
+  const { fetchAlbumTracks, trackDatas, loading, error } = useSetAlbumTracks();
 
-  // トラック時間をmsからh/m/sへ変換
-  const computeTrackDuration = (ms: number): string => {
-    const hour = String(Math.floor(ms / 3600000) + 100).substring(1);
-    const minutes = String(
-      Math.floor((ms - Number(hour) * 3600000) / 60000) + 100
-    ).substring(1);
-    const second = String(
-      Math.round(
-        (ms - Number(hour) * 3600000 - Number(minutes) * 60000) / 1000
-      ) + 100
-    ).substring(1);
-    return hour === "00"
-      ? minutes + ":" + second
-      : hour + ":" + minutes + ":" + second;
-  };
-
+  // アルバムトラック情報を取得する
   useEffect(() => {
-    axios
-      .get<TrackResponse>(`https://api.spotify.com/v1/albums/${state}/tracks`, {
-        headers: { Authorization: "Bearer " + accessToken },
-        data: {}
-      })
-      .then((res) => {
-        console.log(res.data.items);
-        const resultDatas = res.data.items.map((track) => ({
-          id: track.id,
-          track_number: track.track_number,
-          name: track.name,
-          href: track.href,
-          preview: track.preview_url,
-          duration_ms: track.duration_ms,
-          track_time: computeTrackDuration(track.duration_ms),
-          disc_number: track.disc_number
-        }));
-        console.log(resultDatas);
-        setTrackDatas(resultDatas);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    fetchAlbumTracks(state, accessToken);
   }, []);
 
   console.log(state);
   return (
     <>
-      {trackDatas.map((track) => (
-        <SDl key={track.id}>
-          <dt>{track.track_number}</dt>
-          <dd>
-            {track.name}
-            <a href={track.preview}> プレビュー</a>
-          </dd>
-          <br />
-          <dt>時間</dt>
-          <dd>{track.track_time}</dd>
-        </SDl>
-      ))}
+      {error ? (
+        <p style={{ color: "red" }}>データの取得に失敗しました</p>
+      ) : loading ? (
+        <p>Loading...</p>
+      ) : (
+        <>
+          {trackDatas.map((track) => (
+            <SDl key={track.id}>
+              <dt>{track.track_number}</dt>
+              <dd>
+                {track.name}
+                <a href={track.preview}> プレビュー</a>
+              </dd>
+              <br />
+              <dt>時間</dt>
+              <dd>{track.track_time}</dd>
+            </SDl>
+          ))}
+        </>
+      )}
     </>
   );
 });

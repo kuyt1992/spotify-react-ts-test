@@ -3,7 +3,7 @@ export type Track = {
   track_number: number;
   name: string;
   href: string;
-  preview: string;
+  preview?: string;
   duration_ms: number;
   track_time: string;
   disc_number: number;
