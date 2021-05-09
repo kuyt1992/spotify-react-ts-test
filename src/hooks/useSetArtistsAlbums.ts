@@ -11,6 +11,7 @@ export const useSetArtistsAlbums = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  // アーティストのアルバム情報取得
   const fetchArtistsAlbums = async (
     artistId: Location,
     accessToken: string
@@ -47,5 +48,5 @@ export const useSetArtistsAlbums = () => {
         setLoading(false);
       });
   };
-  return { artistsAlbumsDatas, fetchArtistsAlbums, loading, error };
+  return { fetchArtistsAlbums, artistsAlbumsDatas, loading, error };
 };

@@ -46,7 +46,6 @@ export const useSetAlbumTracks = () => {
           track_time: computeTrackDuration(track.duration_ms),
           disc_number: track.disc_number
         }));
-        console.log(resultDatas);
         setTrackDatas(resultDatas);
       })
       .catch((err) => {

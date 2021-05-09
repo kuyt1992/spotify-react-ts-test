@@ -18,9 +18,10 @@ export const ArtistsAlbums: VFC<Props> = memo((props) => {
     error
   } = useSetArtistsAlbums();
 
+  // アルバム情報を取得
   useEffect(() => {
     fetchArtistsAlbums(state, accessToken);
-  }, [accessToken, state]);
+  }, []);
 
   return (
     <>

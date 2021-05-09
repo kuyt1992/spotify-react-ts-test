@@ -19,7 +19,6 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
     fetchAlbumTracks(state, accessToken);
   }, []);
 
-  console.log(state);
   return (
     <>
       {error ? (
@@ -32,8 +31,8 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
             <SDl key={track.id}>
               <dt>{track.track_number}</dt>
               <dd>
-                {track.name}
-                <a href={track.preview}> プレビュー</a>
+                {`${track.name}  `}
+                <a href={track.preview}>{track.preview ? "プレビュー" : ""}</a>
               </dd>
               <br />
               <dt>時間</dt>

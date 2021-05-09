@@ -9,6 +9,7 @@ export const useSerchArtists = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
+  // アーティスト名で検索し、データ取得
   const searchArtists = async (artistName: string, accessToken: string) => {
     setLoading(true);
     setError(false);
@@ -30,7 +31,6 @@ export const useSerchArtists = () => {
           genres: artist.genres?.join(" / ")
         }));
         setResultArtistDatas(resultDatas);
-        console.log(resultDatas);
       })
       .catch((err) => {
         setError(true);

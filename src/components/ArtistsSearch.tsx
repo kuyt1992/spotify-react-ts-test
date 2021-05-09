@@ -23,7 +23,7 @@ export const ArtistsSearch: VFC<Props> = memo((props) => {
     setSearchArtistName(e.target.value);
   };
 
-  // 検索実行
+  // アーティスト検索実行
   const onClickSearchArtist = () => {
     searchArtists(searchArtistName, accessToken);
   };
