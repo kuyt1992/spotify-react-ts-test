@@ -16,6 +16,22 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
 
   const [trackDatas, setTrackDatas] = useState<Array<Track>>([]);
 
+  // トラック時間をmsからh/m/sへ変換
+  const computeTrackDuration = (ms: number): string => {
+    const hour = String(Math.floor(ms / 3600000) + 100).substring(1);
+    const minutes = String(
+      Math.floor((ms - Number(hour) * 3600000) / 60000) + 100
+    ).substring(1);
+    const second = String(
+      Math.round(
+        (ms - Number(hour) * 3600000 - Number(minutes) * 60000) / 1000
+      ) + 100
+    ).substring(1);
+    return hour === "00"
+      ? minutes + ":" + second
+      : hour + ":" + minutes + ":" + second;
+  };
+
   useEffect(() => {
     axios
       .get<TrackResponse>(`https://api.spotify.com/v1/albums/${state}/tracks`, {
@@ -23,6 +39,7 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
         data: {}
       })
       .then((res) => {
+        console.log(res.data.items);
         const resultDatas = res.data.items.map((track) => ({
           id: track.id,
           track_number: track.track_number,
@@ -30,21 +47,16 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
           href: track.href,
           preview: track.preview_url,
           duration_ms: track.duration_ms,
+          track_time: computeTrackDuration(track.duration_ms),
           disc_number: track.disc_number
         }));
+        console.log(resultDatas);
         setTrackDatas(resultDatas);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [accessToken, trackDatas, state]);
-
-  // トラック時間数をミリ秒から分へ変換
-  const toMinutes = (trackTime: number) => {
-    const minutes = Math.floor(trackTime / 1000 / 60) % 60;
-    console.log(minutes);
-    return minutes;
-  };
+  }, []);
 
   console.log(state);
   return (
@@ -58,7 +70,7 @@ export const AlbumTracks: VFC<Props> = memo((props) => {
           </dd>
           <br />
           <dt>時間</dt>
-          <dd>{toMinutes(track.duration_ms)}</dd>
+          <dd>{track.track_time}</dd>
         </SDl>
       ))}
     </>

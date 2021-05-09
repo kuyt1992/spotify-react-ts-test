@@ -5,5 +5,6 @@ export type Track = {
   href: string;
   preview: string;
   duration_ms: number;
+  track_time: string;
   disc_number: number;
 };
