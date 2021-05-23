@@ -1,16 +1,11 @@
-import { memo, useEffect, useState, VFC } from "react";
+import { memo, useEffect, VFC } from "react";
 import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 import { useSetArtistsAlbums } from "../hooks/useSetArtistsAlbums";
 
-type Props = {
-  accessToken: string;
-};
-
-export const ArtistsAlbums: VFC<Props> = memo((props) => {
+export const ArtistsAlbums: VFC = memo(() => {
   const { state } = useLocation<Location>();
-  const { accessToken } = props;
   const {
     artistsAlbumsDatas,
     fetchArtistsAlbums,
@@ -20,7 +15,7 @@ export const ArtistsAlbums: VFC<Props> = memo((props) => {
 
   // アルバム情報を取得
   useEffect(() => {
-    fetchArtistsAlbums(state, accessToken);
+    fetchArtistsAlbums(state);
   }, []);
 
   return (

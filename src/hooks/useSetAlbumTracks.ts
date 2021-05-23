@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
+
+import { accessTokenState } from "../store/accessTokenState";
 import { TrackResponse } from "../types/api/TrackResponse";
 import { Track } from "../types/Track";
 
 export const useSetAlbumTracks = () => {
+  const accessToken = useRecoilValue(accessTokenState);
   const [trackDatas, setTrackDatas] = useState<Array<Track>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -25,7 +29,7 @@ export const useSetAlbumTracks = () => {
   };
 
   // アルバムトラック情報を取得する
-  const fetchAlbumTracks = async (state: Location, accessToken: string) => {
+  const fetchAlbumTracks = async (state: Location) => {
     setLoading(true);
     setError(false);
 

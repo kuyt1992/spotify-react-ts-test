@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { atom, useRecoilState, useSetRecoilState } from "recoil";
 
 import { Credentials } from "../Credentials";
+import { accessTokenState } from "../store/accessTokenState";
 
 // アクセストークンを取得してセットするカスタムフック
 export const useSetAccessToken = () => {
   const spotifyClientInfo = Credentials();
-  const [accessToken, setAccessToken] = useState("");
+  // const [accessToken, setAccessToken] = useState("");
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   useEffect(() => {
     axios("https://accounts.spotify.com/api/token", {
@@ -28,7 +31,11 @@ export const useSetAccessToken = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [spotifyClientInfo.ClientId, spotifyClientInfo.ClientSecret]);
+  }, [
+    spotifyClientInfo.ClientId,
+    spotifyClientInfo.ClientSecret,
+    setAccessToken
+  ]);
 
   return { accessToken };
 };

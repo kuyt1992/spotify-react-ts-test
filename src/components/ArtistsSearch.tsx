@@ -5,12 +5,7 @@ import styled from "styled-components";
 
 import { useSerchArtists } from "../hooks/useSearchArtists";
 
-type Props = {
-  accessToken: string;
-};
-
-export const ArtistsSearch: VFC<Props> = memo((props) => {
-  const { accessToken } = props;
+export const ArtistsSearch: VFC = memo(() => {
   const {
     searchArtists,
     resultArtistDatas,
@@ -25,7 +20,7 @@ export const ArtistsSearch: VFC<Props> = memo((props) => {
 
   // アーティスト検索実行
   const onClickSearchArtist = () => {
-    searchArtists(searchArtistName, accessToken);
+    searchArtists(searchArtistName);
   };
 
   return (

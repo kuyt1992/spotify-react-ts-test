@@ -4,19 +4,14 @@ import styled from "styled-components";
 
 import { useSetAlbumTracks } from "../hooks/useSetAlbumTracks";
 
-type Props = {
-  accessToken: string;
-};
-
-export const AlbumTracks: VFC<Props> = memo((props) => {
+export const AlbumTracks: VFC = memo(() => {
   const { state } = useLocation<Location>();
-  const { accessToken } = props;
 
   const { fetchAlbumTracks, trackDatas, loading, error } = useSetAlbumTracks();
 
   // アルバムトラック情報を取得する
   useEffect(() => {
-    fetchAlbumTracks(state, accessToken);
+    fetchAlbumTracks(state);
   }, []);
 
   return (

@@ -1,16 +1,19 @@
 import axios from "axios";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 
+import { accessTokenState } from "../store/accessTokenState";
 import { ArtistResponse } from "../types/api/ArtistResponse";
 import { Artist } from "../types/Artist";
 
 export const useSerchArtists = () => {
+  const accessToken = useRecoilValue(accessTokenState);
   const [resultArtistDatas, setResultArtistDatas] = useState<Array<Artist>>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
   // アーティスト名で検索し、データ取得
-  const searchArtists = async (artistName: string, accessToken: string) => {
+  const searchArtists = async (artistName: string) => {
     setLoading(true);
     setError(false);
 

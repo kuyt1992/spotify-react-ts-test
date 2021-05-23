@@ -1,6 +1,11 @@
-export const Credentials = () => {
+type CredentialType = {
+  ClientId: string;
+  ClientSecret: string;
+};
+
+export const Credentials = (): CredentialType => {
   return {
-    ClientId: "4634a5a6b58745ed81388e5bc26ccfda",
-    ClientSecret: "2e4b6e40ffa74cdc9f9ad07a996d954f"
+    ClientId: process.env.REACT_APP_CLIENT_ID,
+    ClientSecret: process.env.REACT_APP_CLIENT_SECRET
   };
 };

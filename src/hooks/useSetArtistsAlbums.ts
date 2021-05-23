@@ -1,10 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 
+import { accessTokenState } from "../store/accessTokenState";
 import { ArtistsAlbum } from "../types/ArtistsAlbum";
 import { ArtistsAlbumsResponse } from "../types/api/ArtistsAlbumsResponse";
 
 export const useSetArtistsAlbums = () => {
+  const accessToken = useRecoilValue(accessTokenState);
   const [artistsAlbumsDatas, setArtistsAlbumsDatas] = useState<
     Array<ArtistsAlbum>
   >([]);
@@ -12,10 +15,7 @@ export const useSetArtistsAlbums = () => {
   const [error, setError] = useState(false);
 
   // アーティストのアルバム情報取得
-  const fetchArtistsAlbums = async (
-    artistId: Location,
-    accessToken: string
-  ) => {
+  const fetchArtistsAlbums = async (artistId: Location) => {
     setLoading(true);
     setError(false);
 
