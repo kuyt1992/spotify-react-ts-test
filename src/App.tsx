@@ -6,6 +6,7 @@ import { AppInit } from "./components/AppInit";
 import { ArtistsSearch } from "./components/ArtistsSearch";
 import { ArtistsAlbums } from "./components/ArtistsAlbums";
 import { AlbumTracks } from "./components/AlbumTracks";
+import { SearchAlbums } from "./components/SearchAlbums";
 
 export default function App() {
   return (
@@ -20,7 +21,12 @@ export default function App() {
         <Route>
           <Switch>
             <Route exact path="/">
-              <ArtistsSearch />
+              {/* <div>
+                <ArtistsSearch />
+              </div> */}
+              <div>
+                <SearchAlbums />
+              </div>
             </Route>
             <Route
               path="/albums"
